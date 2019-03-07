@@ -21,8 +21,10 @@
  *****************************************************************************/
 
 define([
+    "./src/MineModelProvider",
     'legacyRegistry'
 ], function (
+    MineModelProvider,
     legacyRegistry
 ) {
 
@@ -30,6 +32,12 @@ define([
         "name": "My Items",
         "description": "Defines a root named My Items",
         "extensions": {
+            "types": [
+                { "key": "mine.portfolio", "name": "Portfolio", "cssClass": "icon-page", "description": "My portfolio page" },
+            ],
+            "views": [
+                { "key": "mine.portfolio", "type": "mine.portfolio", "templateUrl": "templates/portfolio.html", "editable": false },
+            ],
             "roots": [
                 {
                     "id": "mine"
@@ -41,9 +49,31 @@ define([
                     "model": {
                         "name": "My Items",
                         "type": "folder",
-                        "composition": [],
+                        "composition": [
+                            'portfolio'
+                        ],
                         "location": "ROOT"
                     }
+                }
+            ],
+            "components": [
+                {
+                    "provides": "modelService",
+                    "type": "provider",
+                    "implementation": MineModelProvider,
+                    "depends": [
+                        "$q"
+                    ]
+                }
+            ],
+            "stylesheets": [
+                {
+                    "stylesheetUrl": "css/mine-espresso.css",
+                    "theme": "espresso"
+                },
+                {
+                    "stylesheetUrl": "css/mine-snow.css",
+                    "theme": "snow"
                 }
             ]
         }
